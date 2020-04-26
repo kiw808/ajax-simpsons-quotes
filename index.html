@@ -18,20 +18,40 @@
 <body>
   <section class="section">
     <div class="container">
-      <h1 class="title">Chuck Norris Jokes</h1>
-      <p>Reload for another joke!</p>
+      <h1 class="title">Simpsons Quotes</h1>
+      <p>Reload for another quote!</p>
 
-      <div class="content" id="chuck-norris">
+      <div class="content" id="simpson">
       </div>
     </div>
 
   </section>
 
   <!-- We need to load axios first! -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
-  <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
+    <script>
+        // This function loads pokemon data from the Pokemon API
+        function fetchSimpsonQuoteJSON() {
+            const url = 'https://simpsons-quotes-api.herokuapp.com/quotes';
+            axios.get(url)
+            .then(function(response) {
+                return response.data; // response.data instead of response.json() with fetch
+            })
+            .then(function(simpson) {
+                console.log('data decoded from JSON:', simpson);
 
-  </script>
+                // Build a block of HTML
+                const simpsonHtml = `
+                    <p><strong>${simpson[0].character}</strong></p>
+                    <img src="${simpson[0].image}" />
+                    <p><q>${simpson[0].quote}</q></p>
+                `;
+                document.querySelector('#simpson').innerHTML = simpsonHtml;
+            });
+        }
+
+        fetchSimpsonQuoteJSON();
+    </script>
 </body>
 
 </html>
